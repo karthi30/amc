@@ -1,0 +1,44 @@
+<div class="container" ng-controller="amcController">
+	<h2 class="text-center">AMC Calulation</h2>
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-2"><h4>Scheme Name</h4></div>
+			<div class="col-md-2"><h4>Date</h4></div>
+			<div class="col-md-2"><h4>Invested</h4></div>
+			<div class="col-md-2"><h4>Purchased Units</h4></div>
+			<div class="col-md-2"><h4>Today's Value</h4></div>
+			<div class="col-md-2"><h4>Action</h4></div>
+		</div>
+		<div class="row">
+			<div ng-repeat="plan in plans">
+				<div class="col-md-2 form-group">
+					<select class="form-control" id="name" ng-model="plan.scheme_name" ng-blur="checkSchemeValue(plan, $index)">
+						<option ng-repeat="name in all_scheme_names">{{name}}</option>
+					</select>
+				</div>
+				<div class="col-md-2 form-group"><input class="form-control" type="date" name="" ng-model="plan.date" ng-blur="checkSchemeValue(plan, $index)" placeholder="dd/mm/yyyy"></div>
+				<div class="col-md-2 form-group"><input class="form-control" type="number" name="" ng-model="plan.invested" ng-blur="checkSchemeValue(plan, $index)" placeholder="₹"></p></div>
+				<div class="col-md-2 form-group"><p class="form-control">{{plan.units | number : 4}}</p></div>
+				<div class="col-md-2 form-group"><p class="form-control">{{plan.today | number : 4}}</p></div>
+				<div class="col-md-2"><span class="label label-success pointer" ng-click="newScheme()">+</span> <span class="label label-danger pointer" ng-click="removeScheme($index)" ng-show="plans.length > 1">-</span></div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="col-md-offset-10 col-md-2">
+				<input class="btn btn-primary" type="button" value="Submit" ng-click="totalValue(plans)"/>
+			</div>
+			<div class="col-md-4">
+				<h4>Invested: <span class="amt"> ₹ {{invested | number : 4}}</span></h4>
+			</div>
+			<div class="col-md-4">
+				<h4>Current Worth: <span class="amt"> ₹ {{worth | number : 4}}</span></h4>
+			</div>
+			<div class="col-md-4">
+				<h4>Profit: <span class="amt"> ₹ {{profit | number : 4}}</span></h4>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var all_scheme_names = <%= @all_scheme_names.to_json.html_safe %>
+</script>

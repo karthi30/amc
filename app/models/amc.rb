@@ -1,0 +1,2 @@
+class Amc < ApplicationRecord
+end
